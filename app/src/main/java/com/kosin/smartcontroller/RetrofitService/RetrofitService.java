@@ -2,8 +2,10 @@ package com.kosin.smartcontroller.RetrofitService;
 
 import com.kosin.smartcontroller.RetrofitService.callbacks.GetAllRoomsCallback;
 import com.kosin.smartcontroller.RetrofitService.callbacks.GetLightsFromRoom;
+import com.kosin.smartcontroller.RetrofitService.callbacks.GetStatusOfLightsFromRoomCallback;
 import com.kosin.smartcontroller.RetrofitService.callbacks.LightOnOffCallback;
 import com.kosin.smartcontroller.RetrofitService.interfaces.LightService;
+import com.kosin.smartcontroller.beans.LightStatus;
 
 import java.util.List;
 
@@ -30,7 +32,6 @@ public class RetrofitService {
         lightOnOff.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                System.out.println("Success");
                 onOffCallback.onSucces(response.body());
             }
 
@@ -69,6 +70,24 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void getStatusOfLightsFromRoom(
+            String roomName,
+            GetStatusOfLightsFromRoomCallback callback
+    ) {
+        Call<List<LightStatus>> getStatusOfLights = restService.getStatusOfLights(roomName);
+        getStatusOfLights.enqueue(new Callback<List<LightStatus>>() {
+            @Override
+            public void onResponse(Call<List<LightStatus>> call, Response<List<LightStatus>> response) {
+                callback.onSucces(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<LightStatus>> call, Throwable t) {
                 t.printStackTrace();
             }
         });

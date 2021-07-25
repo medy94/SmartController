@@ -1,5 +1,7 @@
 package com.kosin.smartcontroller.RetrofitService.interfaces;
 
+import com.kosin.smartcontroller.beans.LightStatus;
+
 import java.util.List;
 
 import io.github.zeroone3010.yahueapi.Room;
@@ -21,4 +23,7 @@ public interface LightService {
 
     @GET("/lights/{roomName}")
     Call<List<String>> getLightsOfRoom(@Path("roomName") String roomName);
+
+    @GET("/lights/getStatusOfLights/{roomName}")
+    Call<List<LightStatus>> getStatusOfLights(@Path("roomName") String roomName);
 }
